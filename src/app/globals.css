@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  font-family: 'Roboto Mono', monospace;
+}
+
+
+body {
+    font-family: sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .chat-box {
+    flex: 1;
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+  }
+  
+  .message {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 75%;
+  }
+  
+  .message.bot {
+    background-color: #e0f8e9;
+    align-self: flex-start;
+  }
+  
+  .message.user {
+    background-color: #cce5ff;
+    align-self: flex-end;
+    text-align: right;
+  }
+  
+  .input-box {
+    display: flex;
+    gap: 8px;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  button {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
+  

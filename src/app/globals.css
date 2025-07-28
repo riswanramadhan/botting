@@ -2,11 +2,88 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@keyframes tilt-shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(7deg); }
+  50% { transform: rotate(-7deg); }
+  75% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.hover-tilt {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover-tilt:hover {
+  animation: tilt-shake 0.6s ease-in-out;
+}
+
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  animation: fadeSlideIn 0.4s ease-in-out;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background-color: #f3e8ff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  color: #6b21a8;
+  cursor: pointer;
+}
 
 
 body {
   font-family: 'Roboto Mono', monospace;
 }
+
+@keyframes fadeBody {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
 
 
 body {
@@ -14,6 +91,8 @@ body {
     background-color: #f2f2f2;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+    animation: fadeBody 0.6s ease-in;
   }
   
   .container {
@@ -24,6 +103,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden; 
   }
   
   .title {
@@ -39,10 +119,13 @@ body {
     border-radius: 8px;
     overflow-y: auto;
     margin-bottom: 16px;
+    scroll-behavior: smooth;
+    margin-bottom: 0px; 
+    max-height: (100px); 
   }
   
   .message {
-    margin-bottom: 8px;
+    margin-bottom: 0px;
     padding: 8px 12px;
     border-radius: 10px;
     max-width: 75%;
@@ -68,17 +151,92 @@ body {
     flex: 1;
     padding: 8px;
     font-size: 16px;
+    color: #000000; 
+    border-radius: 6px;
+    outline: none;
+    border: 2px solid #6a0dad;
+    box-shadow: 0 0 5px #a855f7;
+    transition: all 0.3s ease-in-out;
   }
   
+  /* Tambahkan di global CSS */
+.image-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.image-popup img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.image-popup button {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+img.chat-image {
+  @apply w-full max-w-sm rounded-xl mt-3 cursor-pointer;
+  width: 100%;
+  max-width: 100%; /* Lebih besar dari sebelumnya */
+  height: auto; 
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  border: 2px solid #e0e0e0;
+
+}
+
+img.chat-image:hover {
+  transform: scale(1.03);
+}
+
+
+
   button {
     background-color: #28a745;
     color: white;
     padding: 8px 16px;
     border: none;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
   }
   
   button:hover {
-    background-color: #218838;
+    background-color: #d0c8d1;
+    transform: scale(1.05);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+
+  .send-button {
+    background: linear-gradient(135deg, #a855f7, #3b82f6);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  
+  .send-button:hover {
+    box-shadow: 0 0 10px #8b5cf6;
+    transform: scale(1.05);
   }
   

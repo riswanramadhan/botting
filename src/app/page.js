@@ -113,7 +113,7 @@ useEffect(() => {
       botReply = `Pengertian Stunting: Stunting adalah kondisi gagal tumbuh pada anak balita akibat kekurangan gizi kronis.`;
     } else if (msg.includes("makanan bergizi") || msg.includes("menu sehat")) {
       botReply = `🥗 <b>Menu Sehat untuk Balita</b>:<br/>- Karbohidrat (nasi, kentang)<br/>- Protein hewani (ikan, telur)<br/>- Protein nabati (tahu, tempe)<br/>- Sayuran hijau<br/>- Buah berwarna`;
-    } else if (msg.includes("siapa kader") && (msg.includes("posyandu") || msg.includes("watang bacukiki"))) {
+    } else if (msg.includes("kader") && (msg.includes("posyandu") || msg.includes("watang bacukiki"))) {
       botReply = `📋 <b>Daftar Kader 6 Posyandu</b><br/>
       🏥 <b>Posyandu Kelinci 1</b>: Ervina (Ketua), A. Irma (Sekretaris), Andi Haliyah (Bendahara), Nurfaisah & Nilawati (Anggota)<br/>
       🏥 <b>Posyandu Kelinci 2</b>: Rusnah (Ketua), Sicilia Fatikasari (Sekretaris), Ernawati (Bendahara), Mawar Mentari & Fani (Anggota)<br/>
@@ -121,7 +121,9 @@ useEffect(() => {
       🏥 <b>Posyandu Sumber Ikhlas</b>: Nurhayati (Ketua), Rasni Asri (Sekretaris), Hasna (Bendahara), ST. Rahmah, S.E (Anggota)<br/>
       🏥 <b>Posyandu Nuri</b>: Susilawati (Ketua), Widya Astuti (Sekretaris), Hatipa (Bendahara), Reka Amalia & Bunati (Anggota)<br/>
       🏥 <b>Posyandu Alamanda</b>: Neda (Ketua), Diana (Sekretaris), Darmawati (Bendahara), Kasmawati & Nurjannah (Anggota)`;
-    } else if (msg.includes("siapa kader") && (msg.includes("posyandu lansia") || msg.includes("kader lansia"))) {
+      if (
+        msg.includes("kader posyandu") &&
+        (msg.includes("lansia") || msg.includes("lansia")))
       botReply = `🧓🏻 <b>Daftar Kader Posyandu Lansia di Watang Bacukiki</b><br/>
       🏥 <b>Posyandu Kelinci 1</b>: Rusni<br/>
       🏥 <b>Posyandu Kelinci 2</b>: Aisyah<br/>
@@ -230,7 +232,7 @@ useEffect(() => {
     } else if (msg.includes("pencegahan dini stunting") || msg.includes("apakah stunting bisa dicegah")) {
       botReply = `🌱 <b>Pencegahan Dini</b>:<br/>- Gizi cukup sejak hamil<br/>- ASI eksklusif<br/>- Imunisasi lengkap<br/>- MPASI tepat<br/>- Lingkungan sehat`;
     } else {
-      botReply = "🙏 Maaf, saya hanya bisa menjawab pertanyaan seputar stunting, gizi, posyandu, dan struktur kader.";
+      botReply = '🙏 Maaf yaa, aku cuma ngerti seputar stunting, gizi, posyandu, dan struktur kader di wilayah Watang Bacukiki. 🤖 Kalau belum ada jawabannya, mungkin aku belum sempat belajar topik itu. Stay tuned ya! Tim kami bakal update terus infonya 💬✨';
     }
 
     setIsTyping(true);
@@ -264,7 +266,18 @@ useEffect(() => {
     <div className={`min-h-screen flex flex-col md:flex-row ${themeBg} transition-colors duration-500 font-mono overflow-hidden`}>
       <aside className={`${sidebarOpen ? "block" : "hidden"} md:block w-full md:w-60 bg-purple-600 text-white flex-shrink-0 p-4 justify-between flex-col md:flex`}>
         <div className="space-y-4">
-          <h2 className="text-xl font-bold mb-4">BOTTING</h2>
+        <div className="flex items-center gap-3 mb-6">
+  <img
+    src="/maskot2-botting.png"
+    alt="Maskot Botting"
+    className="w-14 h-14 md:w-16 md:h-16 floaty-animation pop-hover transition-transform duration-300 ease-in-out"
+  />
+  <h2 className="text-2xl md:text-3xl font-extrabold tracking-wide botting-title stretch-hover">
+    BOTTING
+  </h2>
+</div>
+
+
           <button
             onClick={handleNewChat}
             className={`font-semibold py-2 px-4 rounded-lg w-full transition ${
@@ -352,34 +365,59 @@ useEffect(() => {
             </div>
           ) : (
             messages.map((msg, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 15, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.3 }}
-                className={`max-w-[90%] md:max-w-[75%] px-4 py-2 rounded-xl shadow-md break-words whitespace-pre-line text-base ${
-                msg.from === "bot"
-                  ? `${chatBubbleBot}`
-                  : `${chatBubbleUser} ml-auto`
-              } [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg [&_img]:cursor-pointer [&_img]:border [&_img]:border-purple-300 [&_img]:shadow-md`}
+  <div
+    key={idx}
+    className={`flex items-start gap-3 ${
+      msg.from === "bot" ? "justify-start" : "justify-end"
+    }`}
+  >
+    {/* Avatar Bot di kiri luar chat */}
+    {msg.from === "bot" && (
+      <img
+        src="/icon-botting.png" // pastikan ini sesuai file di public/
+        alt="Botting Icon"
+        className="w-10 h-10 rounded-full object-cover border border-purple-400 shadow-md mt-1"
+      />
+    )}
 
-              >
-              <div
-  dangerouslySetInnerHTML={{
-    __html: msg.text.replace(/<img /g, '<img class="chat-image cursor-pointer max-w-full rounded-lg border border-purple-300 shadow-md" ')
-  }}
-/> {popupImg && (
-  <div className="image-popup" onClick={() => setPopupImg(null)}>
-    <img src={popupImg} alt="popup" />
-    <a href={popupImg} download className="absolute top-5 left-5 bg-white text-black font-bold px-4 py-2 rounded-md shadow">
-      ⬇ Unduh Gambar
-    </a>
+    {/* Bubble Chat */}
+    <motion.div
+      initial={{ opacity: 0, y: 15, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.3 }}
+      className={`max-w-[90%] md:max-w-[75%] px-4 py-2 rounded-xl shadow-md break-words whitespace-pre-line text-base ${
+        msg.from === "bot"
+          ? `${chatBubbleBot}`
+          : `${chatBubbleUser} ml-auto`
+      } [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg [&_img]:cursor-pointer [&_img]:border [&_img]:border-purple-300 [&_img]:shadow-md`}
+    >
+      <div
+        dangerouslySetInnerHTML={{
+          __html: msg.text.replace(
+  /<img /g,
+  `<img onclick="(function(){
+    window.setPopupImg && (window.setPopupImg(null), setTimeout(() => window.setPopupImg('IMG_URL_REPLACE'), 10));
+  })()" class="chat-image cursor-pointer max-w-full rounded-lg border border-purple-300 shadow-md" `
+)
+,
+        }}
+      />
+      {popupImg && (
+        <div className="image-popup" onClick={() => setPopupImg(null)}>
+          <img src={popupImg} alt="popup" />
+          <a
+            href={popupImg}
+            download
+            className="absolute top-5 left-5 bg-white text-black font-bold px-4 py-2 rounded-md shadow"
+          >
+            ⬇ Unduh Gambar
+          </a>
+        </div>
+      )}
+    </motion.div>
   </div>
-)}
+))
 
-
-              </motion.div>
-            ))
           )}
           <div ref={chatEndRef} />
         </main>
@@ -393,7 +431,9 @@ useEffect(() => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               className={`flex-1 border rounded-lg px-4 py-2 text-lg focus:outline-none transition-colors duration-300 ${
-                darkMode ? "bg-[#2e2e3a] text-white placeholder-gray-300" : "bg-white text-white"
+    darkMode
+      ? "bg-[#2e2e3a] text-white placeholder-gray-400 border-purple-500"
+      : "bg-white text-gray-900 placeholder-gray-500 border-purple-300"
               }`}
             />
             <button

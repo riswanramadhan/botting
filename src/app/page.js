@@ -59,6 +59,8 @@ useEffect(() => {
     "Ciri stunting",
     "Cara mencegah stunting",
     "Apakah stunting bisa sembuh?",
+    "Apa saja menu makanan sehat untuk keluarga?",
+    "Apa itu 1000 Hari Pertama Kehidupan (HPK)?",
     "MPASI sehat",
     "ASI eksklusif",
     "Gizi ibu hamil",
@@ -231,6 +233,17 @@ useEffect(() => {
       botReply = `🏛️ <b>Pendiri dari Bacukiki ialah</b>:<br/>- IVAN PERDANA<br/>FOUNDER BACUKIKI SEJAK 292 SEBELUM MASEHI <br/>- Sementara anggotanya antara lain adalah:<br/>- Nanda Nicola yang bertugas sebagai pelindung watang bacukiki`;
     } else if (msg.includes("pencegahan dini stunting") || msg.includes("apakah stunting bisa dicegah")) {
       botReply = `🌱 <b>Pencegahan Dini</b>:<br/>- Gizi cukup sejak hamil<br/>- ASI eksklusif<br/>- Imunisasi lengkap<br/>- MPASI tepat<br/>- Lingkungan sehat`;
+    } else if (msg.includes("menu makanan") || msg.includes("makanan sehat") || msg.includes("makan sehat keluarga")) {
+      botReply = `🍽️ <b>Rekomendasi Pola Makan Harian untuk Keluarga</b><br/>
+    - Pagi: Karbohidrat (nasi/roti), protein (telur/ikan), buah (pisang/apel), air putih<br/>
+    - Siang: Nasi, lauk hewani (ayam/ikan), sayuran hijau (bayam, kangkung), buah potong<br/>
+    - Sore/Malam: Nasi sedikit, protein ringan (tahu/tempe), sup sayur, air hangat<br/>
+    💡 Tips: Hindari makanan instan & perbanyak air putih. Makan bersama juga bisa tingkatkan bonding keluarga!`;
+    } else if (msg.includes("1000 hari pertama") || msg.includes("1000 hpk") || msg.includes("seribu hari pertama")) {
+      botReply = `🍼 <b>Apa itu 1000 Hari Pertama Kehidupan (HPK)?</b><br/>
+    1000 HPK adalah periode emas sejak anak masih dalam kandungan (270 hari) hingga usia 2 tahun (730 hari).<br/>
+    🌟 Di masa ini, otak dan fisik anak berkembang sangat cepat. Nutrisi yang cukup & stimulasi yang baik sangat penting agar anak tumbuh optimal dan terhindar dari stunting.<br/>
+    💡 Yuk jaga asupan gizi sejak hamil hingga anak usia 2 tahun demi masa depan yang lebih cerah!`;
     } else {
       botReply = '🙏 Maaf yaa, aku cuma ngerti seputar stunting, gizi, posyandu, dan struktur kader di wilayah Watang Bacukiki. 🤖 Kalau belum ada jawabannya, mungkin aku belum sempat belajar topik itu. Stay tuned ya! Tim kami bakal update terus infonya 💬✨';
     }

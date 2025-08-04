@@ -97,6 +97,15 @@
   cursor: pointer;
 }
 
+@keyframes floatLeftRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+
+.float-bot {
+  animation: floatLeftRight 3s ease-in-out infinite;
+}
+
 
 body {
   font-family: 'Roboto Mono', monospace;
@@ -116,8 +125,14 @@ body {
 html,
 body {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  
 }
 
+html {
+  scroll-behavior: smooth;
+}
 
 
 body {
@@ -241,6 +256,11 @@ img.chat-image:hover {
   transform: scale(1.03);
 }
 
+
+button:hover {
+  transition: all 0.2s ease-in-out;
+  transform: translateX(2px);
+}
 
 
   button {

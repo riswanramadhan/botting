@@ -16,7 +16,11 @@ export default function Home() {
   const [isTyping, setIsTyping] = useState(false);
   const [popupImg, setPopupImg] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
-
+  const handleFAQClick = (question) => {
+    setSidebarOpen(false);
+    handleSendQuick(question); // custom kamu, atau tinggal setInput(question) lalu trigger
+  };
+  
 
 useEffect(() => {
   if (showConfetti) {
@@ -31,6 +35,8 @@ useEffect(() => {
     imgs.forEach((img) => {
       img.addEventListener("click", () => setPopupImg(img.src));
     });
+    window.setPopupImg = setPopupImg;
+
     return () => {
       imgs.forEach((img) => {
         img.removeEventListener("click", () => setPopupImg(img.src));
@@ -263,6 +269,7 @@ useEffect(() => {
   const handleNewChat = () => {
     setMessages([]);
     setActiveMenu("newChat");
+    setSidebarOpen(false); // Tutup sidebar
   };
 
   const themeBg = darkMode
@@ -276,83 +283,143 @@ useEffect(() => {
     : "bg-gradient-to-r from-violet-100 to-purple-300 text-gray-800 border border-purple-300";
 
   return (
-    <div className={`min-h-screen flex flex-col md:flex-row ${themeBg} transition-colors duration-500 font-mono overflow-hidden`}>
-      <aside className={`${sidebarOpen ? "block" : "hidden"} md:block w-full md:w-60 bg-purple-600 text-white flex-shrink-0 p-4 justify-between flex-col md:flex`}>
-        <div className="space-y-4">
-        <div className="flex items-center gap-3 mb-6">
-  <img
-    src="/maskot2-botting.png"
-    alt="Maskot Botting"
-    className="w-14 h-14 md:w-16 md:h-16 floaty-animation pop-hover transition-transform duration-300 ease-in-out"
-  />
-  <h2 className="text-2xl md:text-3xl font-extrabold tracking-wide botting-title stretch-hover">
-    BOTTING
-  </h2>
-</div>
+    <div className={`min-h-screen relative flex flex-col md:flex-row ${themeBg} transition-colors duration-500 font-mono overflow-hidden`}>
+    <aside
+  className={`fixed top-0 left-0 h-screen w-64 bg-purple-600 text-white z-50 transform transition-transform duration-500 ease-out md:static md:translate-x-0 ${
+    sidebarOpen ? "translate-x-0 shadow-2xl shadow-purple-400/30" : "-translate-x-full"
+  } flex-shrink-0 flex flex-col`}
+>
+  {/* Scrollable Content */}
+  <div className="flex-1 overflow-y-auto p-4 flex flex-col">
+    {/* Tombol Close Mobile */}
+    <div className="flex justify-between items-center mb-4 md:hidden">
+      <h2 className="text-xl font-bold">Menu</h2>
+      <button onClick={() => setSidebarOpen(false)} className="text-white text-2xl font-bold focus:outline-none">
+        ×
+      </button>
+    </div>
+
+    {/* Maskot + Judul */}
+    <div className="flex items-center gap-3 mb-6">
+      <img
+        src="/maskot2-botting.png"
+        alt="Maskot Botting"
+        className="w-14 h-14 md:w-16 md:h-16 floaty-animation pop-hover transition-transform duration-300 ease-in-out"
+        style={{ animationDelay: "0.2s" }}
+      />
+      <h2 className="text-2xl md:text-3xl font-extrabold tracking-wide botting-title stretch-hover">
+        BOTTING
+      </h2>
+    </div>
+
+    {/* Tombol Menu */}
+    <div className="flex flex-col gap-2 text-sm mb-4">
+    <button
+  onClick={() => {
+    handleNewChat();
+    setActiveMenu("newChat");
+    setSidebarOpen(false);
+  }}
+  className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition text-left ${
+    activeMenu === "newChat"
+      ? "bg-purple-300 text-purple-900 border-l-4 border-white shadow-inner"
+      : "bg-transparent hover:bg-purple-500"
+  }`}
+>
+  {activeMenu === "newChat" && (
+    <span className="absolute left-2 top-1/2 -translate-y-1/2">🟢</span>
+  )}
+  New Chat
+</button>
+
+{messages.length > 0 && (
+  <button
+    onClick={() => {
+      setActiveMenu("aiChat");
+      setSidebarOpen(false);
+    }}
+    className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition text-left ${
+      activeMenu === "aiChat"
+        ? "bg-purple-300 text-purple-900 border-l-4 border-white shadow-inner"
+        : "bg-transparent hover:bg-purple-500"
+    }`}
+  >
+    {activeMenu === "aiChat" && (
+      <span className="absolute left-2 top-1/2 -translate-y-1/2">🟢</span>
+    )}
+    AI Chat Sekarang
+  </button>
+)}
+
+<button
+  onClick={() => {
+    setShowAbout(!showAbout);
+    setSidebarOpen(false);
+  }}
+  className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition text-left ${
+    showAbout
+      ? "bg-purple-300 text-purple-900 border-l-4 border-white shadow-inner"
+      : "bg-transparent hover:bg-purple-500"
+  }`}
+>
+  {showAbout && (
+    <span className="absolute left-2 top-1/2 -translate-y-1/2">🟢</span>
+  )}
+  About
+</button>
 
 
-          <button
-            onClick={handleNewChat}
-            className={`font-semibold py-2 px-4 rounded-lg w-full transition ${
-              activeMenu === "newChat"
-                ? "bg-purple-300 text-purple-900"
-                : "bg-transparent hover:bg-purple-500"
-            }`}
-          >New Chat</button>
-          {messages.length > 0 && (
-            <button
-              onClick={() => setActiveMenu("aiChat")}
-              className={`font-semibold py-2 px-4 rounded-lg w-full transition ${
-                activeMenu === "aiChat"
-                  ? "bg-purple-300 text-purple-900"
-                  : "bg-transparent hover:bg-purple-500"
-              }`}
-            >AI Chat Sekarang</button>
-          )}
-          <button
-            onClick={() => setShowAbout(!showAbout)}
-            className={`font-semibold py-2 px-4 rounded-lg w-full transition ${
-              showAbout ? "bg-purple-300 text-purple-900" : "bg-transparent hover:bg-purple-500"
-            }`}
-          >About</button>
-          {showAbout && (
-            <div className="mt-4 p-3 bg-purple-800 rounded-lg text-sm space-y-2">
-              <p>Bot ini dibuat untuk membantu edukasi pencegahan stunting dan layanan informasi kesehatan di Watang Bacukiki.</p>
-              <img src="/foto-riswan.jpg" alt="Developer" className="w-20 h-20 rounded-full mx-auto border-2 border-white" />
-              <p className="text-center font-semibold">Riswan Ramadhan</p>
-              <p className="text-center text-xs">Mahasiswa Teknik Informatika UNHAS</p>
-            </div>
-          )}
+      {/* Konten About */}
+      {showAbout && (
+        <div className="mt-4 p-3 bg-purple-800 rounded-lg text-sm space-y-2">
+          <p>Bot ini dibuat untuk membantu edukasi pencegahan stunting dan layanan informasi kesehatan di Watang Bacukiki.</p>
+          <img src="/foto-riswan.jpg" alt="Developer" className="w-20 h-20 rounded-full mx-auto border-2 border-white" />
+          <p className="text-center font-semibold">Riswan Ramadhan</p>
+          <p className="text-center text-xs">Mahasiswa Teknik Informatika UNHAS</p>
         </div>
-        <div className="mt-6">
-          <h3 className="text-lg font-bold mb-2">📌 FAQ Cepat</h3>
-          <div className="space-y-2 max-h-[120px] overflow-y-auto pr-2">
-            {faqList.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setSidebarOpen(true);
-                  setInput(item.toLowerCase());
-                  setTimeout(handleSend, 0);
-                }}
-                className="w-full text-left px-3 py-2 rounded-lg bg-purple-500 hover:bg-purple-700 transition text-sm"
-              >{item}</button>
-            ))}
-          </div>
-        </div>
-        <div className="mt-6 hidden md:block transition-transform duration-300 hover:scale-110 hover:shadow-xl">
-  <img src="/logo-kkn.png" alt="Logo KKN" className="w-24 h-auto mx-auto rounded-lg" />
-  <p className="text-center text-xs mt-2">KKNT-114 UNHAS</p>
-</div>
-      </aside>
+      )}
+    </div>
+
+    {/* FAQ Cepat */}
+    <div>
+      <h3 className="text-lg font-bold mb-2">📌 FAQ Cepat</h3>
+      <div className="space-y-2">
+        {faqList.map((item, idx) => (
+          <button
+            key={idx}
+            onClick={() => {
+              setSidebarOpen(false);
+              setInput(item.toLowerCase());
+              setTimeout(handleSend, 300);
+            }}
+            className="w-full text-left px-3 py-2 rounded-lg bg-purple-500 hover:bg-purple-700 transition text-sm"
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Footer */}
+  <div className="p-4 border-t border-white/30">
+    <div className="transition-transform duration-300 hover:scale-110 hover:shadow-xl">
+      <img src="/logo-kkn.png" alt="Logo KKN" className="w-24 h-auto mx-auto rounded-lg" />
+      <p className="text-center text-xs mt-2">KKNT-114 UNHAS</p>
+    </div>
+  </div>
+</aside>
+
 
       <div className="flex-1 flex flex-col h-[100dvh] overflow-hidden">
         <header className="flex justify-between items-center p-4 border-b border-purple-300">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden text-purple-700 text-xl font-bold"
-            >☰</button>
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="md:hidden text-purple-700 text-2xl font-bold focus:outline-none"
+          >
+            ☰
+          </button>
             <img src="/logo-parepare.png" alt="Logo Kota Parepare" className="w-10 h-10 rounded hover-tilt"/>
 
             <h1 className="font-bold text-lg">Bot Pintar Pencegahan Stunting Warga Kelurahan Watang Bacukiki</h1>
@@ -444,15 +511,30 @@ useEffect(() => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               className={`flex-1 border rounded-lg px-4 py-2 text-lg focus:outline-none transition-colors duration-300 ${
-    darkMode
-      ? "bg-[#2e2e3a] text-white placeholder-gray-400 border-purple-500"
-      : "bg-white text-gray-900 placeholder-gray-500 border-purple-300"
+              darkMode
+                ? "bg-[#2e2e3a] text-white placeholder-gray-400 border-purple-500"
+                : "bg-white text-gray-900 placeholder-gray-500 border-purple-300"
               }`}
             />
             <button
-              onClick={handleSend}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg text-lg"
-            >↑</button>
+            onClick={() => {
+              if (!isTyping) handleSend();
+              else setIsTyping(false); // jika ingin bisa klik untuk hentikan bot
+            }}
+            disabled={isTyping}
+            className={`flex items-center justify-center px-6 py-2 rounded-lg text-lg transition duration-300 ${
+              isTyping
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-purple-600 hover:bg-purple-700 text-white"
+            }`}
+          >
+            {isTyping ? (
+              <div className="animate-spin w-5 h-5 border-t-2 border-white rounded-full"></div>
+            ) : (
+              "↑"
+            )}
+          </button>
+
           </div>
         </div>
 

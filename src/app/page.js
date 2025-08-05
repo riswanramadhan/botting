@@ -614,8 +614,8 @@ useEffect(() => {
         </div>
 
 
-        <footer className="text-center text-xs p-4 border-t border-purple-300 bg-gradient-to-r from-purple-100 to-purple-200 text-gray-800 italic transition-all duration-300 hover:shadow-inner hover:from-purple-200 hover:to-purple-300">
-  <p className="font-semibold tracking-wide">
+        <footer className="text-center text-xs md:text-sm p-4 border-t border-purple-300 bg-gradient-to-r from-purple-100 to-purple-200 text-gray-800 italic transition-all duration-300 hover:shadow-inner hover:from-purple-200 hover:to-purple-300">
+  <p className="font-semibold tracking-wide break-words flex flex-wrap justify-center gap-x-1">
     Developer:{" "}
     <a
       href="https://www.linkedin.com/in/riswan-ramadhan-821781257/"
@@ -624,10 +624,12 @@ useEffect(() => {
       className="text-purple-600 hover:underline hover:text-purple-800 transition-colors"
     >
       Riswan Ramadhan
-    </a>{" "}
-    | <span className="text-purple-600">KKNT-114 Universitas Hasanuddin</span>
+    </a>
+    |
+    <span className="text-purple-600">KKNT-114 Universitas Hasanuddin</span>
   </p>
 </footer>
+
 
       </div>
     </div>

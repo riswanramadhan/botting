@@ -3,12 +3,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Confetti from 'react-confetti';
-
+import {
+  Sun,
+  Pin,
+  Moon,
+  Menu,
+  X,
+  MessageCircle,
+  Bot,
+  Info,
+  Send,
+} from "lucide-react";
 
 export default function Home() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
   const [showAbout, setShowAbout] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("newChat");
@@ -16,6 +33,19 @@ export default function Home() {
   const [isTyping, setIsTyping] = useState(false);
   const [popupImg, setPopupImg] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  
+  const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  handleResize(); // cek pertama kali
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
   const handleFAQClick = (question) => {
     setSidebarOpen(false);
     handleSendQuick(question); // custom kamu, atau tinggal setInput(question) lalu trigger
@@ -285,93 +315,105 @@ useEffect(() => {
   return (
     <div className={`min-h-screen relative flex flex-col md:flex-row ${themeBg} transition-colors duration-500 font-mono overflow-hidden`}>
     <aside
-  className={`fixed top-0 left-0 h-screen w-64 bg-purple-600 text-white z-50 transform transition-transform duration-500 ease-out md:static md:translate-x-0 ${
-    sidebarOpen ? "translate-x-0 shadow-2xl shadow-purple-400/30" : "-translate-x-full"
-  } flex-shrink-0 flex flex-col`}
+  className={`
+    fixed top-0 left-0 h-screen w-64 z-[9999]
+    transform transition-transform duration-500 ease-out
+    md:static md:translate-x-0
+    ${sidebarOpen ? 'translate-x-0 shadow-2xl shadow-purple-400/30' : '-translate-x-full'}
+    flex-shrink-0 flex flex-col
+    bg-white text-purple-900 border-r border-purple-200
+    dark:bg-[#1f1f2e] dark:text-white dark:border-purple-700
+  `}
 >
-  {/* Scrollable Content */}
-  <div className="flex-1 overflow-y-auto p-4 flex flex-col">
-    {/* Tombol Close Mobile */}
+
+  {/* === Scrollable Content === */}
+  <div className="flex-1 overflow-y-auto flex flex-col justify-between p-4">
+
+    {/* === Tombol Close Mobile === */}
     <div className="flex justify-between items-center mb-4 md:hidden">
       <h2 className="text-xl font-bold">Menu</h2>
-      <button onClick={() => setSidebarOpen(false)} className="text-white text-2xl font-bold focus:outline-none">
-        ×
+      <button
+        onClick={() => setSidebarOpen(false)}
+        className="text-purple-700 dark:text-white text-2xl font-bold"
+      >
+        <X size={24} />
       </button>
     </div>
 
-    {/* Maskot + Judul */}
-    <div className="flex items-center gap-3 mb-6">
-      <img
-        src="/maskot2-botting.png"
-        alt="Maskot Botting"
-        className="w-14 h-14 md:w-16 md:h-16 floaty-animation pop-hover transition-transform duration-300 ease-in-out"
-        style={{ animationDelay: "0.2s" }}
-      />
-      <h2 className="text-2xl md:text-3xl font-extrabold tracking-wide botting-title stretch-hover">
-        BOTTING
-      </h2>
-    </div>
+    {/* === Maskot + Judul === */}
+<div className="flex items-center gap-3 mb-6">
+  <img
+    src="/maskot2-botting.png"
+    alt="Maskot Botting"
+    className="w-14 h-14 md:w-16 md:h-16 floaty-animation pop-hover transition-transform duration-300 ease-in-out"
+    style={{ animationDelay: "0.2s" }}
+  />
+  <h2 className="text-2xl md:text-3xl font-extrabold tracking-wide stretch-hover
+    text-purple-900 dark:text-purple-200 transition-colors duration-300 dark:drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]
+">
+    BOTTING
+  </h2>
+</div>
 
-    {/* Tombol Menu */}
+
+    {/* === Tombol Menu === */}
     <div className="flex flex-col gap-2 text-sm mb-4">
-    <button
+      {/* === New Chat === */}
+<button
   onClick={() => {
     handleNewChat();
     setActiveMenu("newChat");
-    setSidebarOpen(false);
   }}
-  className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition text-left ${
-    activeMenu === "newChat"
-      ? "bg-purple-300 text-purple-900 border-l-4 border-white shadow-inner"
-      : "bg-transparent hover:bg-purple-500"
-  }`}
+  className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition-colors duration-300 text-left
+    ${
+      activeMenu === "newChat"
+        ? "bg-purple-300 text-purple-900 dark:bg-purple-600 dark:text-white border-l-4 border-white shadow-inner"
+        : "bg-transparent hover:bg-purple-100 text-purple-900 dark:hover:bg-purple-800 dark:text-white"
+    }`}
 >
-  {activeMenu === "newChat" && (
-    <span className="absolute left-2 top-1/2 -translate-y-1/2">🟢</span>
-  )}
+  <MessageCircle className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" />
   New Chat
 </button>
 
+
+      {/* === AI Chat Sekarang === */}
 {messages.length > 0 && (
   <button
     onClick={() => {
       setActiveMenu("aiChat");
-      setSidebarOpen(false);
     }}
-    className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition text-left ${
-      activeMenu === "aiChat"
-        ? "bg-purple-300 text-purple-900 border-l-4 border-white shadow-inner"
-        : "bg-transparent hover:bg-purple-500"
-    }`}
+    className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition-colors duration-300 text-left
+      ${
+        activeMenu === "aiChat"
+          ? "bg-purple-300 text-purple-900 dark:bg-purple-600 dark:text-white border-l-4 border-white shadow-inner"
+          : "bg-transparent hover:bg-purple-100 text-purple-900 dark:hover:bg-purple-800 dark:text-white"
+      }`}
   >
-    {activeMenu === "aiChat" && (
-      <span className="absolute left-2 top-1/2 -translate-y-1/2">🟢</span>
-    )}
+    <Bot className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" />
     AI Chat Sekarang
   </button>
 )}
 
+      {/* === About === */}
 <button
   onClick={() => {
     setShowAbout(!showAbout);
-    setSidebarOpen(false);
+    setActiveMenu("about");
   }}
-  className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition text-left ${
-    showAbout
-      ? "bg-purple-300 text-purple-900 border-l-4 border-white shadow-inner"
-      : "bg-transparent hover:bg-purple-500"
-  }`}
+  className={`relative font-semibold py-2 px-4 pl-8 rounded-lg w-full transition-colors duration-300 text-left
+    ${
+      activeMenu === "about"
+        ? "bg-purple-300 text-purple-900 dark:bg-purple-600 dark:text-white border-l-4 border-white shadow-inner"
+        : "bg-transparent hover:bg-purple-100 text-purple-900 dark:hover:bg-purple-800 dark:text-white"
+    }`}
 >
-  {showAbout && (
-    <span className="absolute left-2 top-1/2 -translate-y-1/2">🟢</span>
-  )}
+  <Info className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" />
   About
 </button>
 
-
-      {/* Konten About */}
+      {/* === Konten About === */}
       {showAbout && (
-        <div className="mt-4 p-3 bg-purple-800 rounded-lg text-sm space-y-2">
+        <div className="mt-4 p-3 bg-purple-100 dark:bg-purple-900 rounded-lg text-sm space-y-2">
           <p>Bot ini dibuat untuk membantu edukasi pencegahan stunting dan layanan informasi kesehatan di Watang Bacukiki.</p>
           <img src="/foto-riswan.jpg" alt="Developer" className="w-20 h-20 rounded-full mx-auto border-2 border-white" />
           <p className="text-center font-semibold">Riswan Ramadhan</p>
@@ -380,9 +422,12 @@ useEffect(() => {
       )}
     </div>
 
-    {/* FAQ Cepat */}
-    <div>
-      <h3 className="text-lg font-bold mb-2">📌 FAQ Cepat</h3>
+    {/* === FAQ Cepat Scrollable === */}
+    <div className="flex-1 overflow-y-auto pr-1 mb-4">
+    <h3 className="text-lg font-bold mb-2 flex items-center gap-2 text-purple-900 dark:text-white">
+  <Pin className="w-5 h-5" />
+  FAQ Cepat
+</h3>
       <div className="space-y-2">
         {faqList.map((item, idx) => (
           <button
@@ -392,7 +437,7 @@ useEffect(() => {
               setInput(item.toLowerCase());
               setTimeout(handleSend, 300);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg bg-purple-500 hover:bg-purple-700 transition text-sm"
+            className="w-full text-left px-3 py-2 rounded-lg bg-purple-500 hover:bg-purple-700 transition text-sm text-white"
           >
             {item}
           </button>
@@ -401,36 +446,68 @@ useEffect(() => {
     </div>
   </div>
 
-  {/* Footer */}
-  <div className="p-4 border-t border-white/30">
+  {/* === Footer === */}
+  <div className="p-4 border-t border-purple-200 dark:border-purple-800">
     <div className="transition-transform duration-300 hover:scale-110 hover:shadow-xl">
       <img src="/logo-kkn.png" alt="Logo KKN" className="w-24 h-auto mx-auto rounded-lg" />
-      <p className="text-center text-xs mt-2">KKNT-114 UNHAS</p>
+      <p className="text-center text-xs mt-2 text-purple-900 dark:text-white">KKNT-114 UNHAS</p>
     </div>
   </div>
 </aside>
 
 
       <div className="flex-1 flex flex-col h-[100dvh] overflow-hidden">
-        <header className="flex justify-between items-center p-4 border-b border-purple-300">
-          <div className="flex items-center gap-3">
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="md:hidden text-purple-700 text-2xl font-bold focus:outline-none"
-          >
-            ☰
-          </button>
-            <img src="/logo-parepare.png" alt="Logo Kota Parepare" className="w-10 h-10 rounded hover-tilt"/>
+      <header
+  className="flex items-center justify-between px-4 py-3 sticky top-0 z-50 
+             border-b border-purple-300 
+             bg-white dark:bg-[#1f1f2e] 
+             text-purple-900 dark:text-white 
+             shadow-md shadow-purple-200 dark:shadow-purple-800 transition-colors duration-300"
+>
+  {/* Kiri: Hamburger + Logo + Judul */}
+  <div className="flex items-center gap-3 flex-1">
+    <button
+      onClick={() => setSidebarOpen(!sidebarOpen)}
+      className="md:hidden focus:outline-none"
+    >
+      <Menu className="w-6 h-6 text-purple-700 dark:text-white" />
+    </button>
 
-            <h1 className="font-bold text-lg">Bot Pintar Pencegahan Stunting Warga Kelurahan Watang Bacukiki</h1>
-          </div>
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`px-4 py-1 rounded-full font-semibold transition ${
-              darkMode ? "bg-white text-purple-800 hover:bg-purple-100" : "bg-purple-600 text-white hover:bg-purple-700"
-            }`}
-          >{darkMode ? "☀️ Mode Terang" : "🌙 Mode Gelap"}</button>
-        </header>
+    <img
+      src="/logo-parepare.png"
+      alt="Logo Kota Parepare"
+      className="w-10 h-10 rounded hover:rotate-6 transition-transform duration-300"
+    />
+
+<h1 className="text-sm md:text-lg font-bold leading-tight">
+  Bot Pintar Pencegahan Stunting
+  <br className="block md:hidden" />
+  <span className="hidden md:inline"> </span>
+  <span>Warga Kelurahan Watang Bacukiki</span>
+</h1>
+
+  </div>
+
+  {/* Toggle Mode */}
+  <div
+    onClick={() => setDarkMode(!darkMode)}
+    className={`w-14 h-7 flex items-center px-1 rounded-full cursor-pointer transition duration-300 ${
+      darkMode ? "bg-purple-700" : "bg-purple-300"
+    }`}
+  >
+    <div
+      className={`w-5 h-5 rounded-full bg-white flex items-center justify-center transform transition-transform duration-300 ${
+        darkMode ? "translate-x-7" : "translate-x-0"
+      }`}
+    >
+      {darkMode ? (
+        <Moon size={14} className="text-purple-700" />
+      ) : (
+        <Sun size={14} className="text-yellow-500" />
+      )}
+    </div>
+  </div>
+</header>
 
 
         <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
@@ -528,11 +605,9 @@ useEffect(() => {
                 : "bg-purple-600 hover:bg-purple-700 text-white"
             }`}
           >
-            {isTyping ? (
-              <div className="animate-spin w-5 h-5 border-t-2 border-white rounded-full"></div>
-            ) : (
-              "↑"
-            )}
+             <Send className="w-10 h-5" />
+             <span className="block md:hidden text-sm font-medium">Kirim Pesan</span>
+          
           </button>
 
           </div>

@@ -48,7 +48,7 @@ useEffect(() => {
 }, []);
   const handleFAQClick = (question) => {
     setSidebarOpen(false);
-    handleSendQuick(question); // custom kamu, atau tinggal setInput(question) lalu trigger
+    handleSendQuick(question); //tinggal setInput(question) lalu trigger
   };
   
 
@@ -108,7 +108,7 @@ useEffect(() => {
     "Berat badan normal",
     "Peran ayah",
     "Menu sehat untuk balita",
-    "Peran kader posyandu",
+    "Apa peran kader posyandu",
     "Program pemerintah",
     "Pencegahan dini stunting",
     "Lokasi posyandu di Kelurahan Watang Bacukiki",
@@ -261,7 +261,7 @@ useEffect(() => {
       botReply = `👨‍👩‍👧 <b>Peran Ayah</b>:<br/>- Mendukung kebutuhan pangan keluarga<br/>- Ikut edukasi gizi<br/>- Membantu membawa anak ke posyandu`;
     } else if (msg.includes("makanan bergizi") || msg.includes("menu sehat")) {
       botReply = `🥗 <b>Menu Sehat untuk Balita</b>:<br/>- Karbohidrat (nasi, kentang)<br/>- Protein hewani (ikan, telur)<br/>- Protein nabati (tahu, tempe)<br/>- Sayuran hijau<br/>- Buah berwarna`;
-    } else if (msg.includes("peran") && (msg.includes("kader") || msg.includes("posyandu"))) {
+    } else if (msg.includes("apa") && (msg.includes("peran") || msg.includes("kader posyandu"))) {
       botReply = `👩‍⚕️ <b>Peran Kader Posyandu</b>:<br/>- Menimbang balita<br/>- Memberi penyuluhan gizi<br/>- Membagikan PMT<br/>- Edukasi pencegahan stunting`;
     } else if (msg.includes("program pemerintah") || msg.includes("upaya pemerintah")) {
       botReply = `🏛️ <b>Program Pemerintah</b>:<br/>- Pemberian makanan tambahan<br/>- Edukasi gizi ibu hamil<br/>- Sanitasi sehat<br/>- Pemantauan posyandu`;

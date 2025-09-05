@@ -36,6 +36,7 @@ export default function Home() {
   
   const [isMobile, setIsMobile] = useState(false);
 
+  
 useEffect(() => {
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768);
@@ -115,7 +116,26 @@ useEffect(() => {
     "Siapa kader posyandu dikelurahan watang bacukiki",
     "Siapa kader posyandu lansia di Kelurahan Watang Bacukiki",
     "Jadwal posyandu di Kelurahan Watang Bacukiki",
-    "Siapa Developer Website"
+    "Siapa Developer Website",
+    
+  // --- Tambahan baru ---
+  "Cegah nikah dini",
+  "TTD untuk remaja putri",
+  "Anemia pada ibu hamil",
+  "Apakah boleh susu formula?",
+  "Imunisasi kejar bila terlewat",
+  "Vitamin A untuk balita",
+  "CTPS (cuci tangan pakai sabun)",
+  "Jarak kehamilan ideal / KB",
+  "Diare pada balita",
+  "Cacingan dan hubungannya dengan stunting",
+  "Anak susah makan (GTM)",
+  "Stimulasi dini tumbuh kembang",
+  "Perbedaan stunting dan wasting",
+  "MP-ASI per usia (6–24 bulan)",
+  "Air minum layak & sanitasi aman",
+  "Peran remaja putri dalam cegah stunting"
+
   ];
 
   const typeWriter = (text, callback) => {
@@ -280,6 +300,56 @@ useEffect(() => {
     1000 HPK adalah periode emas sejak anak masih dalam kandungan (270 hari) hingga usia 2 tahun (730 hari).<br/>
     🌟 Di masa ini, otak dan fisik anak berkembang sangat cepat. Nutrisi yang cukup & stimulasi yang baik sangat penting agar anak tumbuh optimal dan terhindar dari stunting.<br/>
     💡 Yuk jaga asupan gizi sejak hamil hingga anak usia 2 tahun demi masa depan yang lebih cerah!`;
+    // --- Tambahan topik baru ---
+
+} else if (msg.includes("cegah nikah dini") || msg.includes("perkawinan anak") || msg.includes("nikah dini")) {
+  botReply = `👩‍❤️‍👨 <b>Cegah Nikah Dini</b>: Usia terlalu muda meningkatkan risiko anemia, BBLR, dan stunting. Fokuskan pendidikan, gizi remaja putri, TTD mingguan, dan perencanaan keluarga.`;
+
+} else if (msg.includes("ttd remaja putri") || msg.includes("tablet tambah darah remaja") || msg.includes("remaja putri anemia")) {
+  botReply = `💊 <b>TTD Remaja Putri</b>: Minum 1 tablet tambah darah/minggu untuk cegah anemia. Manfaat: konsentrasi belajar naik & kesiapan kehamilan sehat di masa depan.`;
+
+} else if (msg.includes("anemia ibu hamil") || msg.includes("hb rendah ibu hamil") || msg.includes("zat besi bumil")) {
+  botReply = `🩸 <b>Anemia pada Ibu Hamil</b>: Gejala lemas/pucat/pusing. Atasi: TTD harian sesuai anjuran, makan tinggi zat besi (hati/ikan/telur), tambah vitamin C, hindari teh/kopi dekat waktu minum TTD.`;
+
+} else if (msg.includes("susu formula") || msg.includes("pakai botol susu") || msg.includes("dot bayi")) {
+  botReply = `🍼 <b>Tentang Formula & Botol</b>: Prioritas ASI. Formula digunakan bila ada indikasi medis/ASI tak mencukupi. Hindari dot (risiko infeksi & karies); lebih aman <i>cup feeding</i>. Konsultasikan ke nakes.`;
+
+} else if (msg.includes("imunisasi kejar") || msg.includes("vaksin terlewat") || msg.includes("ketinggalan imunisasi")) {
+  botReply = `💉 <b>Imunisasi Kejar</b>: Jika jadwal terlewat, segera ke fasilitas kesehatan untuk jadwal kejar. Vaksin tetap bermanfaat meski terlambat. Bawa buku KIA ya!`;
+
+} else if (msg.includes("vitamin a") || msg.includes("kapsul vitamin a")) {
+  botReply = `🫐 <b>Vitamin A</b>: Diberikan 2×/tahun untuk balita (Februari & Agustus). Manfaat: daya tahan tubuh & kesehatan mata, mendukung tumbuh kembang.`;
+
+} else if (msg.includes("ctps") || msg.includes("cuci tangan pakai sabun") || msg.includes("cuci tangan 5 waktu")) {
+  botReply = `🧼 <b>CTPS 5 Waktu</b>: Sebelum menyiapkan makanan, sebelum makan, setelah BAB, setelah membersihkan anak BAB, dan setelah dari luar rumah. Cegah diare & infeksi penyebab stunting.`;
+
+} else if (msg.includes("kb") || msg.includes("jarak kehamilan") || msg.includes("jarak kelahiran")) {
+  botReply = `👶 <b>Jarak Kehamilan Ideal</b>: Minimal 24 bulan antar kelahiran membantu pemulihan ibu dan menurunkan risiko BBLR/stunting. Konsultasikan pilihan KB yang sesuai.`;
+
+} else if (msg.includes("diare") || msg.includes("mencret")) {
+  botReply = `🚑 <b>Tata Laksana Diare</b>: Berikan <b>ORS + Zinc 10–14 hari</b>, teruskan ASI/MP-ASI, jaga kebersihan. Waspada tanda bahaya (darah di tinja, lemas berat, muntah berulang) → segera ke fasyankes.`;
+
+} else if (msg.includes("cacingan") || msg.includes("obat cacing")) {
+  botReply = `🪱 <b>Cacingan & Stunting</b>: Ganggu penyerapan gizi. Pencegahan: alas kaki, jamban sehat, CTPS. Pemberian obat cacing sesuai usia/anjuran tiap 6 bulan pada wilayah berisiko.`;
+
+} else if (msg.includes("gtm") || msg.includes("anak susah makan") || msg.includes("gerakan tutup mulut")) {
+  botReply = `🍽️ <b>Atasi GTM</b>: Jadwal makan rutin, porsi kecil tapi sering, variasi menu & tekstur, libatkan anak menyiapkan makanan, hindari distraksi layar. Pantau BB; konsultasi bila tak naik.`;
+
+} else if (msg.includes("stimulasi dini") || msg.includes("stimulasi perkembangan") || msg.includes("tumbuh kembang")) {
+  botReply = `🧩 <b>Stimulasi Dini</b>: Ajak bicara, baca buku, bermain, sentuh sayang, dan responsif. Gizi cukup + stimulasi = dukung kecerdasan & emosi anak. Rutin skrining di Posyandu/PAUD.`;
+
+} else if (msg.includes("stunting vs wasting") || msg.includes("beda stunting dan wasting") || msg.includes("kurus dan pendek")) {
+  botReply = `📊 <b>Stunting vs Wasting</b>: <b>Stunting</b> = pendek untuk usia (kronis). <b>Wasting</b> = kurus untuk tinggi/usia (akut). Keduanya butuh intervensi gizi & kesehatan.`;
+
+} else if (msg.includes("menu mpasi per usia") || msg.includes("mpasi 6-8") || msg.includes("mpasi 9-11") || msg.includes("mpasi 12-24")) {
+  botReply = `🍲 <b>MP-ASI per Usia</b>: 6–8 bln: tekstur lumat-kental (2–3×/hari + 1–2 selingan). 9–11 bln: cincang/lembek (3–4× + selingan). 12–24 bln: makanan keluarga (3–4× + selingan). Wajib protein hewani tiap hari.`;
+
+} else if (msg.includes("air minum layak") || msg.includes("sanitasi aman") || msg.includes("wash")) {
+  botReply = `🚰 <b>Air & Sanitasi Aman</b>: Gunakan air minum layak, jamban sehat, dan bersihkan alat makan/MP-ASI. Ini menurunkan infeksi berulang yang memicu stunting.`;
+
+} else if (msg.includes("peran remaja putri") || msg.includes("remaja sehat") || msg.includes("calon ibu sehat")) {
+  botReply = `🌱 <b>Peran Remaja Putri</b>: Makan bergizi seimbang, TTD mingguan, olahraga & istirahat cukup, edukasi kesehatan reproduksi, dan tunda pernikahan agar siap menjadi ibu sehat.`;
+
     } else {
       botReply = '🙏 Maaf yaa, aku cuma ngerti seputar stunting, gizi, posyandu, dan struktur kader di wilayah Watang Bacukiki. 🤖 Kalau belum ada jawabannya, mungkin aku belum sempat belajar topik itu. Stay tuned ya! Tim kami bakal update terus infonya 💬✨';
     }
@@ -302,7 +372,8 @@ useEffect(() => {
     setSidebarOpen(false); // Tutup sidebar
   };
 
-  const themeBg = darkMode
+  const themeBg = darkMode 
+
     ? "bg-gradient-to-br from-purple-900 to-purple-800 text-white"
     : "bg-[#f1f6fb] text-gray-900";
   const chatBubbleBot = darkMode
